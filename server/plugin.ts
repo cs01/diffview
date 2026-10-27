@@ -34,7 +34,7 @@ async function runSection(spec: SectionSpec): Promise<{ section: Section; raw: s
       cwd: spec.dir,
       maxBuffer: 1024 * 1024 * 1024,
     });
-    return { section: { title: spec.title, dir: spec.dir, cmd, files: parseDiff(stdout) }, raw: stdout };
+    return { section: { title: spec.title, dir: spec.dir, cmd, files: parseDiff(stdout, spec.dir) }, raw: stdout };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     return { section: { title: spec.title, dir: spec.dir, cmd, files: [], error: msg }, raw: `error:${msg}` };

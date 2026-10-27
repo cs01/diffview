@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ViewMode } from "./DiffTable";
+import { CopyButton } from "./CopyButton";
 import { Counts, FileCard, splitPath, STATUS_LABEL } from "./FileCard";
 import { load, save } from "./storage";
 import type { DiffPayload } from "./types";
@@ -182,23 +183,26 @@ export function App() {
                 const { dir, name } = splitPath(f.path);
                 const key = keyOf(s.title, f.path);
                 return (
-                  <a
+                  <div
                     key={f.path}
-                    href={`#${id}`}
                     className={`side-file${current === id ? " cur" : ""}${viewed.has(key) ? " done" : ""}`}
+                    title={f.path}
                     onClick={(e) => {
                       e.preventDefault();
                       jump(id);
                     }}
-                    title={f.path}
                   >
                     <span className={`dot ${f.status}`} title={STATUS_LABEL[f.status]} />
                     <span className="side-path">
                       <span className="name">{name}</span>
                       {dir && <span className="dir">{dir}</span>}
                     </span>
+                    <span className="copies">
+                      <CopyButton text={f.path} label="Copy relative path" />
+                      <CopyButton text={f.absPath} label="Copy absolute path" abs />
+                    </span>
                     <Counts a={f.additions} d={f.deletions} />
-                  </a>
+                  </div>
                 );
               })}
             </div>

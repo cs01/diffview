@@ -133,7 +133,7 @@ button { font: inherit; color: inherit; }
 .chev:hover { background: var(--surface-2); color: var(--text); }
 .chev svg { transition: transform .12s; transform: rotate(90deg); }
 .card.collapsed .chev svg { transform: none; }
-.path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 13px var(--mono); cursor: pointer; }
+.path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 13px var(--mono); cursor: text; user-select: text; -webkit-user-select: text; }
 .path .dir { color: var(--dim); }
 .path .name { font-weight: 600; }
 .path .from { color: var(--faint); margin-left: 10px; font-size: 12px; }
@@ -202,3 +202,24 @@ tr.hunk td {
 @media (max-width: 900px) {
   .sidebar { display: none; }
 }
+
+/* copy buttons: hidden until the row or header is hovered */
+.copies { display: inline-flex; gap: 2px; opacity: 0; transition: opacity .1s; }
+.card-head:hover .copies, .card-head:focus-within .copies,
+.side-file:hover .copies, .side-file:focus-within .copies { opacity: 1; }
+.copy {
+  display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px;
+  background: none; border: 0; border-radius: 4px; color: var(--dim); cursor: pointer;
+}
+.copy:hover { background: var(--surface-2); color: var(--text); }
+.copy.done { color: var(--green); }
+.copied { font: 11px var(--sans); }
+.side-file { position: relative; cursor: pointer; }
+.side-file .copies {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  background: var(--surface-2); border-radius: 5px; box-shadow: 0 0 0 6px var(--surface-2);
+  pointer-events: none;
+}
+.side-file:hover .copies { pointer-events: auto; }
+.slash { font: 600 12px var(--mono); margin-right: 2px; }
+.copy { grid-auto-flow: column; align-items: center; }

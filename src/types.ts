@@ -16,6 +16,8 @@ export type FileStatus = "added" | "deleted" | "modified" | "renamed" | "binary"
 export interface FileDiff {
   path: string;
   oldPath: string;
+  /** absolute path on the server machine: section dir + path */
+  absPath: string;
   status: FileStatus;
   additions: number;
   deletions: number;

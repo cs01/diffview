@@ -2,7 +2,7 @@ import type { DiffLine, FileDiff, Hunk } from "../src/types.ts";
 
 const HUNK_RE = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@ ?(.*)$/;
 
-export function parseDiff(raw: string): FileDiff[] {
+export function parseDiff(raw: string, dir: string): FileDiff[] {
   const files: FileDiff[] = [];
   let file: FileDiff | null = null;
   let hunk: Hunk | null = null;
@@ -24,6 +24,7 @@ export function parseDiff(raw: string): FileDiff[] {
       file = {
         path: strip(b),
         oldPath: strip(a),
+        absPath: "",
         status: "modified",
         additions: 0,
         deletions: 0,
@@ -71,5 +72,6 @@ export function parseDiff(raw: string): FileDiff[] {
     }
     if (dl) hunk.lines.push(dl);
   }
+  for (const f of files) f.absPath = `${dir.replace(/\/$/, "")}/${f.path}`;
   return files;
 }

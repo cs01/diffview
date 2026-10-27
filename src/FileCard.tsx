@@ -1,4 +1,5 @@
 import { memo, useEffect, useRef, useState } from "react";
+import { CopyButton } from "./CopyButton";
 import { DiffTable, type ViewMode } from "./DiffTable";
 import { highlightHunks, type Tok } from "./highlight";
 import type { DiffLine, FileDiff } from "./types";
@@ -67,10 +68,14 @@ export const FileCard = memo(function FileCard({ id, file, mode, collapsed, view
         <button className="chev" onClick={onToggleCollapse} aria-label={collapsed ? "Expand" : "Collapse"} aria-expanded={!collapsed}>
           <svg viewBox="0 0 16 16" width="16" height="16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
-        <span className="path" onClick={onToggleCollapse}>
+        <span className="path">
           <span className="dir">{dir}</span>
           <span className="name">{name}</span>
           {renamedFrom && <span className="from">{"←"} {renamedFrom}</span>}
+        </span>
+        <span className="copies">
+          <CopyButton text={file.path} label="Copy relative path" />
+          <CopyButton text={file.absPath} label="Copy absolute path" abs />
         </span>
         <span className={`badge ${file.status}`}>{STATUS_LABEL[file.status]}</span>
         <Counts a={file.additions} d={file.deletions} />
