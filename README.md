@@ -32,6 +32,18 @@ knows about them (`git add -N <path>`).
 Useful URL options: `#<path>` scrolls to a file on load, `?only=<path suffix>`
 shows a single file.
 
+## Claude Code plugin
+
+The repo is also a Claude Code plugin: a skill that tells Claude when and how
+to start diffview, and a `/diffview` command. At a Claude Code prompt:
+
+```
+/plugin install diffview --marketplace cs01/diffview
+```
+
+From a shell: `claude plugin install diffview --marketplace cs01/diffview`.
+Then ask Claude to "show me the diff", or run `/diffview`.
+
 ## Watching an agent work
 
 diffview is handy for following a coding agent: start it on the agent's repo

@@ -1,0 +1,7 @@
+{
+  "name": "diffview",
+  "version": "0.1.0",
+  "author": { "name": "Chad Smith", "url": "https://github.com/cs01" },
+  "homepage": "https://github.com/cs01/diffview",
+  "description": "Live side-by-side git diff viewer in the browser, so a person can watch and review changes as they are made"
+}

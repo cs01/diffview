@@ -1,0 +1,6 @@
+{
+  "name": "diffview",
+  "owner": { "name": "cs01" },
+  "description": "diffview: watch and review code changes live in the browser",
+  "plugins": [{ "name": "diffview", "source": "./" }]
+}
