@@ -1,0 +1,20 @@
+#!/bin/sh
+# usage: diffview [--port N] ["<title>|<repo dir>|<git diff args>" ...]
+# With no sections, shows uncommitted changes in the current directory's repo.
+PORT=8765
+if [ "$1" = "--port" ]; then PORT="$2"; shift 2; fi
+if [ $# -eq 0 ]; then set -- "$(basename "$PWD")|$PWD|HEAD"; fi
+export PATH="$HOME/.bun/bin:$PATH"
+# Resolve through symlinks so the launcher can be linked onto PATH.
+SELF="$0"
+while [ -L "$SELF" ]; do
+  LINK="$(readlink "$SELF")"
+  case "$LINK" in /*) SELF="$LINK" ;; *) SELF="$(dirname "$SELF")/$LINK" ;; esac
+done
+APP="$(cd "$(dirname "$SELF")/.." && pwd)"
+export DIFFVIEW_SECTIONS="$(bun -e 'console.log(JSON.stringify(process.argv.slice(1).map(s=>{const[t,d,...r]=s.split("|");return{title:t,dir:d.replace(/^~(?=\/|$)/,process.env.HOME),args:r.join("|")}})))' -- "$@")"
+export DIFFVIEW_PORT="$PORT"
+cd "$APP" || exit 1
+[ -d node_modules ] || bun install --silent
+echo "diffview: http://127.0.0.1:$PORT"
+exec bun --bun x vite --host 127.0.0.1 --port "$PORT" --strictPort

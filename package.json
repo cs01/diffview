@@ -1,6 +1,7 @@
 {
   "name": "diffview",
   "private": true,
+  "bin": { "diffview": "bin/diffview" },
   "type": "module",
   "scripts": {
     "dev": "vite",
